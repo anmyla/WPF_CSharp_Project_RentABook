@@ -1,0 +1,69 @@
+﻿<Window x:Class="RentABook.RentOutBookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RentABook" xmlns:models="clr-namespace:RentABook.Models" d:DataContext="{d:DesignInstance Type=models:BookViewModel}"
+        mc:Ignorable="d"
+        Title="Rent Out a Book" Height="Auto" Width="400">
+    <DockPanel>
+        <StackPanel>
+            <TextBlock Text="Search by ID or Keyword:" Margin="10"/>
+            <StackPanel Orientation="Horizontal" Margin="10,0,10,0">
+                <TextBox x:Name="txtSearch"  Width="270" Margin="0,0,20,0" HorizontalAlignment="Left"/>
+                <Button Content="Search" Click="Search_Click" Width="70"  HorizontalAlignment="Right"/>
+            </StackPanel>
+            <ListBox ItemsSource="{Binding SearchResult}" SelectedItem="{Binding SelectedSearchResult}" Margin="10" Grid.Row="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding BookTitle}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <GroupBox Header="Chosen Book Details" Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left"  Margin="3">
+                        <Image Source="{Binding SelectedSearchResult.BookCover}"  Width="100" Height="120"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding SelectedSearchResult.BookId}"/>
+                        <TextBlock Text="{Binding SelectedSearchResult.BookTitle}" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding SelectedSearchResult.BookAuthor}"/>
+                        <TextBlock Text="{Binding SelectedSearchResult.GenreName}"/>
+                        <TextBlock Text="{Binding SelectedSearchResult.BookRating}"/>
+                        <TextBlock Text="{Binding SelectedSearchResult.BookRentPrice}" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Width="200">
+                    <Label HorizontalAlignment="Left" Margin="10,0,10,0">Number of Days:</Label>
+                    <TextBox Text="{Binding RentalDays}" Width="100" HorizontalAlignment="Left" Margin="10,0,10,0"/>
+                </StackPanel>
+                <StackPanel Width="200">
+                    <Label HorizontalAlignment="Left" Margin="10,0,10,0">Amount to be paid:</Label>
+                    <TextBlock Text="{Binding TotalAmount}" Width="100" HorizontalAlignment="Left" Margin="10,0,10,0"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15">
+                <Button Content="Rent Out" Click="RentOut_Click" Margin="10" Width="80" Grid.Row="5"/>
+                <Button Content="Cancel" Click="Cancel_Click" Margin="10" Width="80" HorizontalAlignment="Right"/>
+            </StackPanel>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem>
+                    <TextBlock>
+            <Run Text="BookID: "/>
+            <Run Text="{Binding SelectedBook.BookId}"/>
+            <Run Text=" /  Book Title: "/>
+            <Run Text="{Binding SelectedBook.BookTitle}"/>
+                    </TextBlock>
+                </StatusBarItem>
+                <StatusBarItem/>
+            </StatusBar>
+        </StackPanel>
+
+    </DockPanel>
+</Window>
+

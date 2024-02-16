@@ -18,9 +18,7 @@ namespace RentABook.Models
         private RentABookDB contextDB = new RentABookDB();
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<Book> ListOfBooks { get; set; }
-        public string StatusText1 { get; set; }
-        public string StatusText2 { get; set; }
- 
+
         private Book _selectedBook;
         public Book SelectedBook
         {
@@ -36,26 +34,51 @@ namespace RentABook.Models
         }
 
         private Genre _selectedGenre;
-
         public Genre SelectedGenre
         {
             get => _selectedGenre;
             set
             {
-                if (_selectedGenre != value)
+                if (_selectedGenre == null || _selectedGenre.GenreName != value.GenreName)
                 {
                     _selectedGenre = value;
                     OnPropertyChanged();
+                    SearchBooksByGenre(value);
+                    DisplayBooksByGenre(value);
                 }
             }
         }
 
-
-
+        public ObservableCollection<Genre> Genres { get; } = new ObservableCollection<Genre>();
         public ObservableCollection<Book> SearchResult { get; set; }
+        public ObservableCollection<Book> SearchResultGenre { get; set; }
+        public ObservableCollection<Book> DisplayBookCovers { get; set; }
+
+        private int _rentalDays;
+        public int RentalDays
+        {
+            get { return _rentalDays; }
+            set
+            {
+                _rentalDays = value;
+                OnPropertyChanged();
+                CalculateTotalAmount();
+            }
+        }
+
+        private decimal _totalAmount;
+        public decimal TotalAmount
+        {
+            get { return _totalAmount; }
+            set
+            {
+                _totalAmount = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private string _keyword;
-
         public string Keyword
         {
             get { return _keyword; }
@@ -73,9 +96,7 @@ namespace RentABook.Models
             }
         }
 
-
         private Book _newBook;
-
         public Book NewBook
         {
             get { return _newBook; }
@@ -89,17 +110,46 @@ namespace RentABook.Models
         public BookViewModel()
         {
             ListOfBooks = new ObservableCollection<Book>();
+
+            SearchResult = new ObservableCollection<Book>();
+            SearchResult.Clear();
+
+            SearchResultGenre = new ObservableCollection<Book>();
+            SearchResultGenre.Clear();
+
             var myBooksLocalFromDB = contextDB.Books.ToList();
             foreach (var book in myBooksLocalFromDB)
             {
                 ListOfBooks.Add(book);
             }
 
-            SearchResult = new ObservableCollection<Book>();
-            ChangeStatustxt();
-
             NewBook = new Book();
             ListBoxSelectionChangedCommand = new RelayCommand(ListBoxSelectionChanged);
+
+            Genres = new ObservableCollection<Genre>
+            {
+            new Genre {GenreId= 3, GenreName = "Romance", GenreIconPath = "/Images/icons/romance.png" },
+            new Genre {GenreId= 4, GenreName = "Adventure", GenreIconPath = "/Images/icons/adventure.png" },
+            new Genre {GenreId= 2, GenreName = "Suspense", GenreIconPath = "/Images/icons/sus.png" },
+            new Genre {GenreId= 5, GenreName = "Science Fiction", GenreIconPath = "/Images/icons/scifi.png" },
+            new Genre {GenreId= 6, GenreName = "Horror", GenreIconPath = "/Images/icons/horror.png" },
+            new Genre {GenreId= 7, GenreName = "Educational", GenreIconPath = "/Images/icons/educ.png" }
+            };
+
+            PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(SelectedGenre))
+                {
+                    SearchBooksByGenre(SelectedGenre);
+                }
+            };
+
+            DisplayBookCovers = new ObservableCollection<Book>();
+            DisplayBookCovers.Clear();
+
+            DisplayBooksByGenre(null);
+
+            LoadBooksFromDatabase();
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -107,32 +157,29 @@ namespace RentABook.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
-
         public int AddBook(Book newBook)
         {
             contextDB.Books.Add(newBook);
             ListOfBooks.Add(newBook);
             contextDB.SaveChanges();
-            ChangeStatustxt();
             return newBook.BookId;
         }
 
-        private void ChangeStatustxt()
+        private void SearchBooksByGenre(Genre genre)
         {
-            StatusText1 = "There are " + contextDB.Books.ToList().Count.ToString() + " in the database";
-            NotifyPropertyChanged("StatusText1");
+            SearchResultGenre.Clear();
+            if (genre != null)
+            {
+                foreach (var book in ListOfBooks)
+                {
+                    if (book.GenreName == genre.GenreName)
+                    {
+                        SearchResultGenre.Add(book);
+                    }
+                }
+            }
         }
 
-        public ObservableCollection<Genre> Genres { get; } = new ObservableCollection<Genre>
-        {
-            new Genre { GenreName = "Romance", GenreIconPath = "/Images/icons/romance.png" },
-            new Genre { GenreName = "Adventure", GenreIconPath = "/Images/icons/adventure.png" },
-            new Genre { GenreName = "Suspense", GenreIconPath = "/Images/icons/sus.png" },
-            new Genre { GenreName = "Science Fiction", GenreIconPath = "/Images/icons/scifi.png" },
-            new Genre { GenreName = "Horror", GenreIconPath = "/Images/icons/horror.png" },
-            new Genre { GenreName = "Educational", GenreIconPath = "/Images/icons/educ.png" }
-        };
         private bool _isDuplicateConfirmed;
 
         public bool IsDuplicateConfirmed
@@ -167,7 +214,7 @@ namespace RentABook.Models
             {
                 contextDB.Books.Remove(SelectedBook);
                 ListOfBooks.Remove(SelectedBook);
-                contextDB.SaveChanges();     
+                contextDB.SaveChanges();
             }
         }
 
@@ -192,13 +239,11 @@ namespace RentABook.Models
                 }
                 else
                 {
-                    // Handle case when the book is not found in the database
                     MessageBox.Show("Book not found in the database.");
                 }
             }
             else
             {
-                // Handle case when no book is selected
                 MessageBox.Show("Please select a book to update.");
             }
         }
@@ -222,7 +267,7 @@ namespace RentABook.Models
         {
             if (IsDuplicateConfirmed && SelectedBook != null)
             {
-      
+
                 Book duplicateBook = new Book
                 {
                     BookTitle = SelectedBook.BookTitle,
@@ -234,7 +279,7 @@ namespace RentABook.Models
                     BookCover = SelectedBook.BookCover,
                     BookComment = SelectedBook.BookComment,
                     IsAvailable = SelectedBook.IsAvailable,
-         
+                    GenreName = SelectedBook.GenreName
                 };
 
                 contextDB.Books.Add(duplicateBook);
@@ -243,10 +288,7 @@ namespace RentABook.Models
                 MessageBox.Show("Book duplicated successfully.");
             }
         }
-
         public ICommand ListBoxSelectionChangedCommand { get; }
-
-
 
         private void ListBoxSelectionChanged(object obj)
         {
@@ -263,7 +305,6 @@ namespace RentABook.Models
                 {
                     _selectedSearchResult = value;
                     OnPropertyChanged(nameof(SelectedSearchResult));
-                    // Update the selected book to display its details in the second column
                     SelectedBook = value;
                 }
             }
@@ -271,15 +312,77 @@ namespace RentABook.Models
         public void SearchBooks(string keyword)
         {
             SearchResult.Clear();
+            string lowerKeyword = keyword.ToLower();
+
             foreach (var book in ListOfBooks)
             {
-                if (book.BookTitle.Contains(keyword))
+                string lowerTitle = book.BookTitle.ToLower();
+
+                if (lowerTitle.Contains(lowerKeyword) || book.BookId.ToString().EndsWith(lowerKeyword))
                 {
                     SearchResult.Add(book);
                 }
             }
+
+            if (SearchResult.Count <= 0)
+            {
+                MessageBox.Show("No results for this keyword!");
+            }
         }
 
 
+        private void DisplayBooksByGenre(Genre genre)
+        {
+            DisplayBookCovers.Clear();
+            if (genre == null)
+            {
+                foreach (var book in ListOfBooks)
+                {
+                    DisplayBookCovers.Add(book);
+                }
+                return;
+            }
+            else
+            {
+
+                foreach (var book in ListOfBooks)
+                {
+                    if (book.GenreName == genre.GenreName)
+                    {
+                        DisplayBookCovers.Add(book);
+                    }
+                }
+            }
+        }
+        private void LoadBooksFromDatabase()
+        {
+            var myBooksLocalFromDB = contextDB.Books.ToList();
+            foreach (var book in myBooksLocalFromDB)
+            {
+                ListOfBooks.Add(book);
+            }
+        }
+
+        public void RentOutBook()
+        {
+            if (SelectedSearchResult != null && SelectedSearchResult.IsAvailable)
+            {
+                SelectedSearchResult.IsAvailable = false;
+                contextDB.SaveChanges();
+                MessageBox.Show("Book rented out successfully!");
+            }
+            else
+            {
+                MessageBox.Show("Selected book is not available for rent.");
+            }
+        }
+
+        private void CalculateTotalAmount()
+        {
+            if (SelectedSearchResult != null)
+            {
+                TotalAmount = (decimal)(SelectedSearchResult.BookRentPrice * RentalDays);
+            }
+        }
     }
 }

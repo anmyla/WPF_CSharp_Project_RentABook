@@ -1,32 +1,18 @@
 ﻿using RentABook.Models;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace RentABook
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         BookViewModel bookViewModel = new BookViewModel();
         GenreViewModel genreViewModel = new GenreViewModel();
-
 
         public MainWindow()
         {
@@ -41,15 +27,16 @@ namespace RentABook
             defaultBook.BookComment = null;
             defaultBook.BookCover = "";
             defaultBook.IsAvailable = false;
+            defaultBook.GenreName = "";
+           
 
             this.DataContext = bookViewModel;
             Loaded += MainWindow_Loaded;
-
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Maximized; // Set the window state to maximized
+            WindowState = WindowState.Maximized;
         }
         private void AddNewBook_Click(object sender, RoutedEventArgs e)
         {
@@ -65,11 +52,10 @@ namespace RentABook
                 BookComment = "",
                 BookCover = "",
                 IsAvailable = false,
-            };
+                GenreName = "",
+                };
             addNewBookWindow.DataContext = bookViewModel;
             addNewBookWindow.ShowDialog();
-
-
         }
 
         private void AddAGenre_Click(object sender, RoutedEventArgs e)
@@ -113,26 +99,45 @@ namespace RentABook
 
         private void RentOut_Click(object sender, RoutedEventArgs e)
         {
-            // You may implement code to rent out a book here
-            bookViewModel.RemoveBook();
+
+            RentOutBookWindow rentOutWindow = new RentOutBookWindow();
+            rentOutWindow.ShowDialog();
         }
 
         private void Stash_Click(object sender, RoutedEventArgs e)
         {
-            // You may implement code to stash a book here
+       
             bookViewModel.RemoveBook();
         }
 
         private void HelpWindow_Click(object sender, RoutedEventArgs e)
         {
-            // You may implement code to open a help window here
-            bookViewModel.RemoveBook();
+
+            try
+            {
+                string filePath = "C:\\Users\\MM\\source\\repos\\RentABook\\RentABook\\HELP.txt";
+                string readMeContent = File.ReadAllText(filePath);
+                MessageBox.Show(readMeContent, "About Rent-A-Book Shop Manager", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void AboutWindow_Click(object sender, RoutedEventArgs e)
         {
-            // You may implement code to open an about window here
-            bookViewModel.RemoveBook();
+
+            try
+            {
+                string filePath = "C:\\Users\\MM\\source\\repos\\RentABook\\RentABook\\ABOUT.txt";
+                string readMeContent = File.ReadAllText(filePath);
+                MessageBox.Show(readMeContent, "About Rent-A-Book Shop Manager", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -140,12 +145,12 @@ namespace RentABook
             var listBox = (ListBox)sender;
             if (listBox.SelectedItem != null)
             {
-                // You can access the selected item here and perform any necessary logic
+                MessageBox.Show("Select a book first!");
             }
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Update the search results whenever the text in the TextBox changes
+     
             TextBox textBox = (TextBox)sender;
             bookViewModel.Keyword = textBox.Text;
         }

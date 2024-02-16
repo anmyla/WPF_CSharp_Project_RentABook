@@ -58,7 +58,22 @@
     <Compile Include="CopyBookWindow.xaml.cs">
       <DependentUpon>CopyBookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402161908416_genreid.cs" />
+    <Compile Include="Migrations\202402161908416_genreid.designer.cs">
+      <DependentUpon>202402161908416_genreid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402161946184_genrename_book.cs" />
+    <Compile Include="Migrations\202402161946184_genrename_book.designer.cs">
+      <DependentUpon>202402161946184_genrename_book.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402162147369_deleteBookGenreID.cs" />
+    <Compile Include="Migrations\202402162147369_deleteBookGenreID.designer.cs">
+      <DependentUpon>202402162147369_deleteBookGenreID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\RelayCommand.cs" />
+    <Compile Include="RentOutBookWindow.xaml.cs">
+      <DependentUpon>RentOutBookWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UpdateBookWindow.xaml.cs">
       <DependentUpon>UpdateBookWindow.xaml</DependentUpon>
     </Compile>
@@ -99,6 +114,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="RentOutBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UpdateBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,6 +156,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402161237047_m2.resx">
       <DependentUpon>202402161237047_m2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402161908416_genreid.resx">
+      <DependentUpon>202402161908416_genreid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402161946184_genrename_book.resx">
+      <DependentUpon>202402161946184_genrename_book.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402162147369_deleteBookGenreID.resx">
+      <DependentUpon>202402162147369_deleteBookGenreID.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -202,6 +230,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icons\sus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ABOUT.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="HELP.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

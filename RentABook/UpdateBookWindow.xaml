@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="Add A New Book" Height="600" Width="500">
     <DockPanel>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock>
+            <Run Text="Currently editing BookID: "/>
+            <Run Text="{Binding SelectedBook.BookId}"/>
+            <Run Text=" /  Book Title: "/>
+            <Run Text="{Binding SelectedBook.BookTitle}"/>
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem/>
+        </StatusBar>
         <StackPanel>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <Label Content="Enter Book ID:" FontWeight="Bold" Margin="5,20,5,15"/>
@@ -20,27 +31,16 @@
                 <TextBox Text="{Binding SelectedBook.BookAuthor, Mode=TwoWay}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
                 <Label Margin="10,10,125,0">Year</Label>
                 <TextBox Text="{Binding SelectedBook.BookYear, Mode=TwoWay}"  HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
+                <Label Margin="10,10,125,0">Genre</Label>
+                <TextBox Text="{Binding SelectedBook.GenreName, Mode=TwoWay}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
                 <Label Margin="10,10,125,0">Comment</Label>
                 <TextBox Text="{Binding SelectedBook.BookComment, Mode=TwoWay}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
                 <Label Margin="10,10,125,0">Rating</Label>
                 <Slider Minimum="0" Maximum="5" Value="{Binding SelectedBook.BookRating, Mode=TwoWay}" HorizontalAlignment="Left" Width="340" Margin="-120,10,10,0"></Slider>
                 <Label Margin="10,10,125,0">Is Available</Label>
                 <CheckBox IsChecked="{Binding SelectedBook.IsAvailable, Mode=TwoWay}" Margin="-120,0,10,0"></CheckBox>
-                <Label Margin="10,10,125,0">Genre</Label>
-                <ComboBox Text="Select a Genre" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedBook.BookGenre, Mode=TwoWay}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Height="20" Width="20" Source="{Binding GenreIconPath}" />
-                                <TextBlock Text="{Binding GenreName}" Margin="5,0,0,0" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-
                 <Label Margin="10,10,125,0">Cover Image</Label>
                 <TextBox Text="{Binding SelectedBook.BookCover, Mode=TwoWay}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
-
                 <Label Margin="10,10,125,0">Rent Price</Label>
                 <TextBox Text="{Binding SelectedBook.BookRentPrice, Mode=TwoWay}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
             </UniformGrid>

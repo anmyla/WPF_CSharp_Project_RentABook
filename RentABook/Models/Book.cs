@@ -12,6 +12,7 @@ namespace RentABook.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         public int BookId { get; set; }
+        public string GenreName{ get; set; }
         private string _bookTitle;
         public string BookTitle
         {

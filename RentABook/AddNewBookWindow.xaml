@@ -14,27 +14,16 @@
             <TextBox Text="{Binding NewBook.BookAuthor}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
             <Label Margin="10,10,125,0">Year</Label>
             <TextBox Text="{Binding NewBook.BookYear}"  HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
+            <Label Margin="10,10,125,0">Genre</Label>
+            <TextBox Text="{Binding NewBook.GenreName}"  HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
             <Label Margin="10,10,125,0">Comment</Label>
             <TextBox Text="{Binding NewBook.BookComment}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
             <Label Margin="10,10,125,0">Rating</Label>
             <Slider Minimum="0" Maximum="5" Value="{Binding NewBook.BookRating}" HorizontalAlignment="Left" Width="340" Margin="-120,10,10,0"></Slider>
             <Label Margin="10,10,125,0">Is Available</Label>
             <CheckBox IsChecked="{Binding NewBook.IsAvailable}" Margin="-120,0,10,0"></CheckBox>
-            <Label Margin="10,10,125,0">Genre</Label>
-            <ComboBox Text="Select a Genre" ItemsSource="{Binding Genres}" SelectedItem="{Binding NewBook.BookGenre}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Height="20" Width="20" Source="{Binding GenreIconPath}" />
-                            <TextBlock Text="{Binding GenreName}" Margin="5,0,0,0" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-
             <Label Margin="10,10,125,0">Cover Image</Label>
             <TextBox Text="{Binding NewBook.BookCover}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
-
             <Label Margin="10,10,125,0">Rent Price</Label>
             <TextBox Text="{Binding NewBook.BookRentPrice}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
         </UniformGrid>

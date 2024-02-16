@@ -1,0 +1,27 @@
+-----------------------------------------------------------
+Rent-A-Book Shop Manager 
+-----------------------------------------------------------
+The Rent-A-Book Shop Manager is a desktop application 
+designed to assist shop managers in efficiently managing
+and overseeing their rent-a-book business. With features 
+tailored to streamline book management, genre 
+categorization, and rental operations, this application 
+aims to simplify the complexities of book rental services.
+------------------------------------------------------------
+Technologies Used in this Project
+------------------------------------------------------------
+.NET Framework for desktop application development 
+Entity Framework for data modeling and database operations 
+XAML for designing the user interface (UI)
+Visual Studio 2022
+Microsoft SQL
+-----------------------------------------------------------
+Contributors:
+Myla Ariaga-Nagl
+-----------------------------------------------------------
+Acknowledgements:
+Special thanks to Mr. Johann Grabner for guidance and support.
+-----------------------------------------------------------
+Disclaimer:
+Images used in this project are not own by the contributor.
+This project is solely for educational purposes.

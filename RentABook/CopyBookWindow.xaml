@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RentABook"
         mc:Ignorable="d"
-        Title="Copy A Book" Height="550" Width="500">
-      <DockPanel>
+        Title="Copy a Book" Height="580" Width="400">
+    
+    <DockPanel>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock>
+                    <Run Text="BookID: "/>
+                    <Run Text="{Binding SelectedBook.BookId}"/>
+                    <Run Text=" /  Book Title: "/>
+                    <Run Text="{Binding SelectedBook.BookTitle}"/>
+                </TextBlock>
+            </StatusBarItem>
+        </StatusBar>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -21,10 +32,11 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <Label Content="Enter Book ID:" FontWeight="Bold" Margin="5,20,5,15"/>
-                <TextBox x:Name="txtBookID" Width="80" Height="25" Margin="5,20,10,15"/>
-                <Button Content="Show Book Details" Click="RetrieveBookDetails_Click" Height="25" Width="150" Grid.Row="1" Margin="5,20,5,15"/>
+                <TextBox x:Name="txtBookID" Width="120" Height="25" Margin="5,20,10,15"/>
+                <Button Content="Check Book Details" Click="RetrieveBookDetails_Click" Height="25" Width="120" Grid.Row="1" Margin="5,20,5,15"/>
             </StackPanel>
-            <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="2" Margin="5">
+            
+            <Border BorderBrush="Gray" BorderThickness=".6" Grid.Row="2" Margin="5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -67,20 +79,11 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            <CheckBox Content="Are you sure you want to duplicate this book?" Grid.Row="3" Margin="5" IsChecked="{Binding IsDuplicateConfirmed}" HorizontalAlignment="Center" />
+            <CheckBox Content="Yes, duplicate this book!" Grid.Row="3" Margin="10" IsChecked="{Binding IsDuplicateConfirmed}" HorizontalAlignment="Center" />
             <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Center"  Margin="5,5,5,15">
-                <Button Content="Duplicate and Save" Height="25" Width="100" Click="DuplicateAndSave_Click" Margin="0 0 20 0"/>
+                <Button Content="Duplicate and Save" Height="25" Width="120" Click="DuplicateAndSave_Click" Margin="0 0 20 0"/>
                 <Button Content="Cancel" Height="25" Width="100"  Click="Cancel_Click"/>
             </StackPanel>
-            <StatusBar Grid.Row="7" DockPanel.Dock="Bottom">
-                <StatusBarItem>
-                    <TextBlock Text="Book ID: "/>
-                </StatusBarItem>
-                <StatusBarItem>
-                    <TextBlock Text="{Binding SelectedBook.BookId}"/>
-                </StatusBarItem>
-            </StatusBar>
-
         </Grid>
 
     </DockPanel>

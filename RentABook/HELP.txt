@@ -1,0 +1,28 @@
+How to Use
+---------------------------------------------------------------------------------------------------------------------------------------
+- Add Books: Navigate to the "File" menu and select "Add A Book" to add new books to the inventory.
+- Manage Books: Update book details, delete unwanted books, or create duplicate copies as needed using the options available in the "Edit" menu.
+- Browse by Genre: Use the genre dropdown menu to filter books by genre, simplifying the process of browsing books within specific categories.
+- Rent Books: Mark books as rented out when they are rented by customers, and stash them upon return using the respective options in the "File" menu.
+- Search: Utilize the keyword search functionality to find books by title or author, or refine your search by selecting specific genres for more targeted results.
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Features: Book Management
+---------------------------------------------------------------------------------------------------------------------------------------
+1, Add New Book: Easily add new books to the database, including details such as title, author, publication year, genre, rental price, and availability status.
+2, Update Book Information: Modify existing book details, ensuring accurate and up-to-date information for each book in the inventory.
+3, Delete Book: Remove books from the database when necessary, with confirmation prompts to prevent accidental deletion.
+4, Duplicate Book: Create duplicate copies of existing books, facilitating the process of adding multiple copies of popular titles to the inventory.
+5, Add New Genre: Intuitively add new genres to categorize books, allowing for easy navigation and browsing based on specific genres.
+6, Select Genre: Filter books by genre to quickly access books within a particular category, enhancing browsing efficiency.
+
+Features: Rental Operations
+---------------------------------------------------------------------------------------------------------------------------------------
+1, Rent Out Book: Manage book rentals by marking books as rented out, updating availability status accordingly.
+2, Stash Book: Stash rented books upon return, updating availability status to indicate their availability for future rentals.
+
+Features: Search Functionality
+---------------------------------------------------------------------------------------------------------------------------------------
+1, Keyword Search: Search for books using keywords, enabling users to quickly locate specific titles or authors within the inventory.
+2, Genre-Based Search: Filter search results based on selected genres, refining search queries to display books within the chosen category.
+
