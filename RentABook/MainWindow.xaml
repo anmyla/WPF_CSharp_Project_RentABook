@@ -49,7 +49,7 @@
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="Auto">
                 <StackPanel Width="Auto" Orientation="Horizontal" Margin="10">
-                <Label Content="Select a Genre:" Grid.Row="0"  />
+                <Label Content="Select a Genre:" FontWeight="DemiBold" Grid.Row="0"  />
                 <ComboBox Text="Select a Genre" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" DockPanel.Dock="Left" Width="170" Margin="5,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -70,10 +70,27 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+            <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                    <Label Content="Keyword Search:" FontWeight="DemiBold" Grid.Row="0" VerticalAlignment="Center" />
+                    <TextBox x:Name="searchTextBox"
+                 Width="190"
+                             Height="25"
+                 Margin="5"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"
+                 KeyDown="SearchTextBox_KeyDown"/>
+                </StackPanel>
+                <StackPanel>
+                <ListBox ItemsSource="{Binding SearchResult}"
+                 DisplayMemberPath="BookTitle"
+                 SelectedItem="{Binding SelectedSearchResult}"
+                 Margin="5"/>
+                </StackPanel>
+                
             </StackPanel>
-            <StackPanel Width="Auto" Height="Auto">
+            </StackPanel>
 
-            </StackPanel>
 
             <StackPanel Width="Auto" Margin="5,0" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <GroupBox Header="Book in Focus" Width="251" >
@@ -106,7 +123,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <Image Source="{Binding BookCover}" Margin="15"/>
+                                    <Image Source="{Binding BookCover}" Margin="10" Height="180" Width="160"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -114,7 +131,6 @@
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="5" />
-                                
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>

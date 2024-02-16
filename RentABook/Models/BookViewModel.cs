@@ -253,6 +253,33 @@ namespace RentABook.Models
             SelectedBook = obj as Book;
         }
 
+        private Book _selectedSearchResult;
+        public Book SelectedSearchResult
+        {
+            get => _selectedSearchResult;
+            set
+            {
+                if (_selectedSearchResult != value)
+                {
+                    _selectedSearchResult = value;
+                    OnPropertyChanged(nameof(SelectedSearchResult));
+                    // Update the selected book to display its details in the second column
+                    SelectedBook = value;
+                }
+            }
+        }
+        public void SearchBooks(string keyword)
+        {
+            SearchResult.Clear();
+            foreach (var book in ListOfBooks)
+            {
+                if (book.BookTitle.Contains(keyword))
+                {
+                    SearchResult.Add(book);
+                }
+            }
+        }
+
 
     }
 }

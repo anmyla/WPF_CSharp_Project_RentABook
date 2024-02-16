@@ -43,7 +43,13 @@ namespace RentABook
             defaultBook.IsAvailable = false;
 
             this.DataContext = bookViewModel;
-          
+            Loaded += MainWindow_Loaded;
+
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Maximized; // Set the window state to maximized
         }
         private void AddNewBook_Click(object sender, RoutedEventArgs e)
         {
@@ -135,6 +141,20 @@ namespace RentABook
             if (listBox.SelectedItem != null)
             {
                 // You can access the selected item here and perform any necessary logic
+            }
+        }
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Update the search results whenever the text in the TextBox changes
+            TextBox textBox = (TextBox)sender;
+            bookViewModel.Keyword = textBox.Text;
+        }
+
+        private void SearchTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                bookViewModel.SearchBooks(searchTextBox.Text);
             }
         }
 
