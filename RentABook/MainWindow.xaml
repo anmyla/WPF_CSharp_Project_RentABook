@@ -1,0 +1,127 @@
+﻿<Window x:Class="RentABook.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RentABook" xmlns:models="clr-namespace:RentABook.Models" d:DataContext="{d:DesignInstance Type=models:BookViewModel}"
+        mc:Ignorable="d"
+        Title="Rent-A-Book ShopManager" Height="700" Width="1000">
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Height="30" >
+            <MenuItem Header="File" Width="50" VerticalAlignment="Center" Margin="0,5,0,0">
+                <MenuItem Header="Add A Book" Click="AddNewBook_Click" ></MenuItem>
+                <MenuItem Header="Stash A Book" Click="Stash_Click"></MenuItem>
+                <MenuItem Header="Rent Out A Book" Click="RentOut_Click"></MenuItem>
+                <MenuItem Header="Add A Genre" Click="AddAGenre_Click"></MenuItem>
+                <MenuItem Header="Exit" Click="ExitWindow_Click"></MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="Edit" Width="50" VerticalAlignment="Center" Margin="0,5,0,0">
+                <MenuItem Header="Copy Book" Click="CopyBook_Click"></MenuItem>
+                <MenuItem Header="Update Book" Click="UpdateBook_Click"></MenuItem>
+                <MenuItem Header="Delete Book" Click="DeleteBook_Click"></MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="Extras" VerticalAlignment="Center" Margin="0,5,0,0">
+                <MenuItem Header="Help" Click="HelpWindow_Click"></MenuItem>
+                <MenuItem Header="About" Click="AboutWindow_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <ToolBar DockPanel.Dock="Top" >
+            <Button Click="UpdateBook_Click" Width="50">Edit</Button>
+            <Separator/>
+            <Button Click="DeleteBook_Click" Width="50">Delete</Button>
+        </ToolBar>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock>
+            <Run Text="BookID: "/>
+            <Run Text="{Binding SelectedBook.BookId}"/>
+            <Run Text=" /  Book Title: "/>
+            <Run Text="{Binding SelectedBook.BookTitle}"/>
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem/>
+        </StatusBar>
+
+
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Width="Auto">
+                <StackPanel Width="Auto" Orientation="Horizontal" Margin="10">
+                <Label Content="Select a Genre:" Grid.Row="0"  />
+                <ComboBox Text="Select a Genre" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" DockPanel.Dock="Left" Width="170" Margin="5,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="20" Width="20" Source="{Binding GenreIconPath}" />
+                                <TextBlock Text="{Binding GenreName}" Margin="5,0,0,0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding ListOfBooks}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="10">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding BookTitle}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            <StackPanel Width="Auto" Height="Auto">
+
+            </StackPanel>
+
+            <StackPanel Width="Auto" Margin="5,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <GroupBox Header="Book in Focus" Width="251" >
+                    <StackPanel Height="776" Margin="0,0,12,0">
+                    
+                        <Image Height="220" Width="170" Source="{Binding SelectedBook.BookCover}" Margin="0,15" />
+                        <Label FontWeight="DemiBold">Title:</Label>
+                        <TextBox Text="{Binding SelectedBook.BookTitle, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" BorderThickness="0"></TextBox>
+                        <Label FontWeight="DemiBold">Author:</Label>
+                        <TextBox Text="{Binding SelectedBook.BookAuthor}" BorderThickness="0"></TextBox>
+                        <Label FontWeight="DemiBold">Year Published:</Label>
+                        <TextBox Text="{Binding SelectedBook.BookYear}" BorderThickness="0"></TextBox>
+                        <Label FontWeight="DemiBold">Genre:</Label>
+                        <TextBox Text="{Binding SelectedGenre.GenreName}" BorderThickness="0"></TextBox>
+                        <Label FontWeight="DemiBold">Ratings:</Label>
+                        <TextBox Text="{Binding SelectedBook.BookRating}" BorderThickness="0"></TextBox>
+                        <Label FontWeight="DemiBold">Rent Price:</Label>
+                        <TextBox Text="{Binding SelectedBook.BookRentPrice}" BorderThickness="0"></TextBox>
+                        <Label FontWeight="DemiBold">Remarks:</Label>
+                        <TextBox Text="{Binding SelectedBook.BookAuthor}" BorderThickness="0"></TextBox>
+                        <Label >Is available to Rent:</Label>
+                        <TextBox Text="{Binding SelectedBook.IsAvailable}" BorderThickness="0"></TextBox>
+                    </StackPanel>
+                </GroupBox >
+            </StackPanel>
+
+            <StackPanel Width="Auto">
+                <GroupBox Header="Other Books in this Category">
+                    <ListBox ItemsSource="{Binding ListOfBooks}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="10">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Image Source="{Binding BookCover}" Margin="15"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="5" />
+                                
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                </GroupBox>
+            </StackPanel>
+            
+        </StackPanel>
+    </DockPanel>
+</Window>
+
