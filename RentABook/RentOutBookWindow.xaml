@@ -5,21 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RentABook" xmlns:models="clr-namespace:RentABook.Models" d:DataContext="{d:DesignInstance Type=models:BookViewModel}"
         mc:Ignorable="d"
-        Title="Rent Out a Book" Height="Auto" Width="400">
+        Title="Rent Out a Book"
+    SizeToContent="WidthAndHeight">
     <DockPanel>
         <StackPanel>
-            <TextBlock Text="Search by ID or Keyword:" Margin="10"/>
+            <TextBlock Text="Search by ID or Keyword:" Margin="10" FontWeight="DemiBold"/>
             <StackPanel Orientation="Horizontal" Margin="10,0,10,0">
-                <TextBox x:Name="txtSearch"  Width="270" Margin="0,0,20,0" HorizontalAlignment="Left"/>
-                <Button Content="Search" Click="Search_Click" Width="70"  HorizontalAlignment="Right"/>
+                <TextBox x:Name="txtSearch" Width="400" Height="25" HorizontalAlignment="Left" TextChanged="TxtSearch_TextChanged"/>
             </StackPanel>
-            <ListBox ItemsSource="{Binding SearchResult}" SelectedItem="{Binding SelectedSearchResult}" Margin="10" Grid.Row="2">
+            <Label Margin="5,5,0,0" FontWeight="DemiBold">Choose the book from the search results:</Label>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ListBox ItemsSource="{Binding SearchResult}" SelectedItem="{Binding SelectedSearchResult}" Margin="10,0,10,10" Grid.Row="2" MaxHeight="400">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding BookTitle}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            </ScrollViewer>
 
             <GroupBox Header="Chosen Book Details" Margin="10">
                 <StackPanel Orientation="Horizontal">
@@ -40,7 +43,7 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel Width="200">
                     <Label HorizontalAlignment="Left" Margin="10,0,10,0">Number of Days:</Label>
-                    <TextBox Text="{Binding RentalDays}" Width="100" HorizontalAlignment="Left" Margin="10,0,10,0"/>
+                    <TextBox Text="{Binding RentalDays, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" Margin="10,0,10,0"/>
                 </StackPanel>
                 <StackPanel Width="200">
                     <Label HorizontalAlignment="Left" Margin="10,0,10,0">Amount to be paid:</Label>

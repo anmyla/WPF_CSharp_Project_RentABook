@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace RentABook
 {
-    /// <summary>
-    /// Interaction logic for DeleteBookWindow.xaml
-    /// </summary>
+
     public partial class DeleteBookWindow : Window
     {
         public BookViewModel BVModel { get; set; }
@@ -34,18 +32,32 @@ namespace RentABook
             int bookId;
             if (int.TryParse(txtBookID.Text, out bookId))
             {
-                BVModel.RetrieveBookDetails(bookId);
+                if (BVModel.RetrieveBookDetails(bookId))
+                {
+                    //die details vom book werden gezeigt on the gui
+                }
+                else
+                {
+                    MessageBox.Show("No Books found! Please try again!");
+                }
             }
             else
             {
-                // Handle invalid input
+                MessageBox.Show("invalid inpu! Please use numbers for Book ID!");
             }
+
         }
 
         private void SaveAndClose_Click(object sender, RoutedEventArgs e)
         {
-            BVModel.RemoveBook();
-            Close();
+            if (BVModel.IsDeleteConfirmed)
+            {
+                BVModel.RemoveBook();
+                Close();
+            }
+            else {
+                MessageBox.Show("Please confirm before deleting...");
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

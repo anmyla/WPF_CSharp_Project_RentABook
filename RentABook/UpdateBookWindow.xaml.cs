@@ -1,6 +1,7 @@
 ﻿using RentABook.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,6 @@ using System.Windows.Shapes;
 
 namespace RentABook
 {
-    /// <summary>
-    /// Interaction logic for UpdateBookWindow.xaml
     public partial class UpdateBookWindow : Window
     {
         private readonly BookViewModel BVModel;
@@ -26,6 +25,16 @@ namespace RentABook
             InitializeComponent();
             BVModel = new BookViewModel();
             DataContext = BVModel;
+
+            BVModel.PropertyChanged += BVModel_PropertyChanged;
+        }
+
+        private void BVModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(BVModel.IsUpdateConfirmed))
+            {
+                IsUpdateConfirmedChanged();
+            }
         }
 
         private void RetrieveBookDetails_Click(object sender, RoutedEventArgs e)
@@ -33,18 +42,38 @@ namespace RentABook
             int bookId;
             if (int.TryParse(txtBookID.Text, out bookId))
             {
-                BVModel.RetrieveBookDetails(bookId);
+                if (BVModel.RetrieveBookDetails(bookId))
+                {
+                    //die details vom book werden gezeigt on the gui
+                }
+                else
+                {
+                    MessageBox.Show("No Books found! Please try again!");
+                }
             }
             else
             {
-                // Handle invalid input
+                MessageBox.Show("invalid inpu! Please use numbers for Book ID!");
             }
+
         }
 
         private void SaveAndClose_Click(object sender, RoutedEventArgs e)
         {
-            BVModel.UpdateBook();
-            Close();
+            if (BVModel.IsUpdateConfirmed)
+            {
+                BVModel.UpdateBook();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Please confirm before saving.");
+            }
+        }
+
+        private void IsUpdateConfirmedChanged()
+        {
+            SaveAndCloseButton.IsEnabled = BVModel.IsUpdateConfirmed;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

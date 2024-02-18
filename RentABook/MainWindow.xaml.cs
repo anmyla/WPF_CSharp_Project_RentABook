@@ -106,8 +106,9 @@ namespace RentABook
 
         private void Stash_Click(object sender, RoutedEventArgs e)
         {
-       
-            bookViewModel.RemoveBook();
+
+            StashABook stashBookWindow = new StashABook();
+            stashBookWindow.ShowDialog();
         }
 
         private void HelpWindow_Click(object sender, RoutedEventArgs e)
@@ -145,12 +146,12 @@ namespace RentABook
             var listBox = (ListBox)sender;
             if (listBox.SelectedItem != null)
             {
-                MessageBox.Show("Select a book first!");
+
             }
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-     
+
             TextBox textBox = (TextBox)sender;
             bookViewModel.Keyword = textBox.Text;
         }
@@ -162,6 +163,7 @@ namespace RentABook
                 bookViewModel.SearchBooks(searchTextBox.Text);
             }
         }
+
 
     }
 }

@@ -70,9 +70,16 @@
     <Compile Include="Migrations\202402162147369_deleteBookGenreID.designer.cs">
       <DependentUpon>202402162147369_deleteBookGenreID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402181051536_everythingworks.cs" />
+    <Compile Include="Migrations\202402181051536_everythingworks.designer.cs">
+      <DependentUpon>202402181051536_everythingworks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\RelayCommand.cs" />
     <Compile Include="RentOutBookWindow.xaml.cs">
       <DependentUpon>RentOutBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StashABook.xaml.cs">
+      <DependentUpon>StashABook.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateBookWindow.xaml.cs">
       <DependentUpon>UpdateBookWindow.xaml</DependentUpon>
@@ -115,6 +122,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RentOutBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StashABook.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402162147369_deleteBookGenreID.resx">
       <DependentUpon>202402162147369_deleteBookGenreID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402181051536_everythingworks.resx">
+      <DependentUpon>202402181051536_everythingworks.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

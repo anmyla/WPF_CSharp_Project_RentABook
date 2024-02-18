@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RentABook"
+        xmlns:local="clr-namespace:RentABook" xmlns:models="clr-namespace:RentABook.Models" d:DataContext="{d:DesignInstance Type=models:BookViewModel}"
         mc:Ignorable="d"
         Title="Copy a Book" Height="580" Width="400">
     
@@ -79,9 +79,9 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            <CheckBox Content="Yes, duplicate this book!" Grid.Row="3" Margin="10" IsChecked="{Binding IsDuplicateConfirmed}" HorizontalAlignment="Center" />
+            <CheckBox Content="Yes, duplicate this book!" Grid.Row="3" Margin="10" IsChecked="{Binding IsDuplicateConfirmed}" HorizontalAlignment="Center" Foreground="{Binding UpdateCheckBoxForeground2}"  />
             <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Center"  Margin="5,5,5,15">
-                <Button Content="Duplicate and Save" Height="25" Width="120" Click="DuplicateAndSave_Click" Margin="0 0 20 0"/>
+                <Button x:Name="SaveAndCloseButton" Height="25" Width="150"  Content="Duplicate and Close" Click="SaveAndClose_Click" IsEnabled="{Binding IsDuplicateConfirmed}"  Margin="0,0,25,0"/>
                 <Button Content="Cancel" Height="25" Width="100"  Click="Cancel_Click"/>
             </StackPanel>
         </Grid>

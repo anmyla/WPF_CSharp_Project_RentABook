@@ -1,6 +1,7 @@
 ﻿using RentABook.Models;
 using System.Data.Entity.Infrastructure;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace RentABook
 {
@@ -15,11 +16,10 @@ namespace RentABook
             DataContext = _viewModel;
         }
 
-        private void Search_Click(object sender, RoutedEventArgs e)
+        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             _viewModel.SearchBooks(txtSearch.Text);
         }
-
         private void RentOut_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.RentOutBook();
@@ -29,6 +29,11 @@ namespace RentABook
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void TxtRentalDays_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _viewModel.CalculateTotalAmount();
         }
     }
 }

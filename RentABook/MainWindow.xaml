@@ -36,24 +36,22 @@
             <Button Click="ExitWindow_Click" Width="50">Exit</Button>
         </ToolBar>
         <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem>
-                <TextBlock>
-            <Run Text="BookID: "/>
+            <StatusBarItem Content="{Binding StatusBarText}"></StatusBarItem>
+            <TextBlock>
+            <Run Text=" And you are looking BookID: "/>
             <Run Text="{Binding SelectedBook.BookId}"/>
-            <Run Text=" /  Book Title: "/>
+            <Run Text= ", Book Title: "/>
             <Run Text="{Binding SelectedBook.BookTitle}"/>
-                </TextBlock>
-            </StatusBarItem>
-            <StatusBarItem/>
+            </TextBlock>
         </StatusBar>
 
 
         <StackPanel Orientation="Horizontal">
-            <GroupBox Header="Searches" FontSize="14" FontWeight="Bold">
+            <GroupBox Header="Searches" FontSize="14" FontWeight="Bold" Width="280">
                 <StackPanel Width="Auto">
-                    <StackPanel Width="Auto" Orientation="Horizontal" Margin="10">
+                    <StackPanel Width="260" Orientation="Horizontal" Margin="5">
                         <Label Content="Select a Genre:" FontWeight="DemiBold" Grid.Row="0"  />
-                        <ComboBox Text="Select a Genre" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" DockPanel.Dock="Left" Width="170" Margin="5,0">
+                        <ComboBox Text="Select a Genre" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" DockPanel.Dock="Left" Width="140" Margin="5,0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -64,22 +62,22 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </StackPanel>
-                    <ListBox ItemsSource="{Binding SearchResultGenre}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="10" MinWidth="285">
+                    <ListBox  Width="250" ItemsSource="{Binding SearchResultGenre}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="5" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock Text="{Binding BookTitle}" FontSize="13" FontWeight="Normal"/>
+                                    <TextBlock Width="220" Text="{Binding BookTitle}" FontSize="13" FontWeight="Normal"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Width="280">
                             <Label Content="Keyword Search:" FontWeight="DemiBold" Grid.Row="0" VerticalAlignment="Center" />
-                            <TextBox x:Name="searchTextBox" Width="190"  Height="25" Margin="5"  FontSize="13" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" KeyDown="SearchTextBox_KeyDown"/>
+                            <TextBox x:Name="searchTextBox" Width="135"  Height="25" Margin="5"  FontSize="13" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" KeyDown="SearchTextBox_KeyDown"/>
                         </StackPanel>
                         <StackPanel>
-                            <ListBox ItemsSource="{Binding SearchResult}" DisplayMemberPath="BookTitle" SelectedItem="{Binding SelectedSearchResult}" Margin="5" FontSize="13" FontWeight="Normal"/>
+                            <ListBox Width="250" Margin="-10,0,0,0" ItemsSource="{Binding SearchResult}" DisplayMemberPath="BookTitle" SelectedItem="{Binding SelectedSearchResult}"  FontSize="13" FontWeight="Normal"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
@@ -114,23 +112,28 @@
             </StackPanel>
 
             <StackPanel Width="Auto">
-                <GroupBox Header="Other Books in this Category" FontSize="14" FontWeight="Bold">
-                    <ListBox ItemsSource="{Binding DisplayBookCovers}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="10">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <Image Source="{Binding BookCover}" Margin="10" Height="180" Width="160"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
 
+                <GroupBox Header="Other Books in this Category" FontSize="14" FontWeight="Bold">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListBox ItemsSource="{Binding DisplayBookCovers}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="10">
+                        
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Image Source="{Binding BookCover}" Margin="10" Height="180" Width="160"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                       
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="5" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
+                    </ScrollViewer>
                 </GroupBox>
+
             </StackPanel>
 
         </StackPanel>

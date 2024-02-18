@@ -29,23 +29,39 @@ namespace RentABook
             DataContext = BVModel;
         }
 
+
         private void RetrieveBookDetails_Click(object sender, RoutedEventArgs e)
         {
             int bookId;
             if (int.TryParse(txtBookID.Text, out bookId))
             {
-                BVModel.RetrieveBookDetails(bookId);
+                if (BVModel.RetrieveBookDetails(bookId))
+                {
+                    //die details vom book werden gezeigt on the gui
+                }
+                else
+                {
+                    MessageBox.Show("No Books found! Please try again!");
+                }
             }
             else
             {
-                // Handle invalid input
+                MessageBox.Show("invalid inpu! Please use numbers for Book ID!");
             }
+
         }
 
-        private void DuplicateAndSave_Click(object sender, RoutedEventArgs e)
+        private void SaveAndClose_Click(object sender, RoutedEventArgs e)
         {
-            BVModel.DuplicateBook();
-            Close();
+            if (BVModel.IsDuplicateConfirmed)
+            {
+                BVModel.DuplicateBook();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Please confirm before duplicating...");
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

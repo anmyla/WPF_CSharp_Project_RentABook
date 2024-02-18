@@ -1,24 +1,24 @@
-﻿<Window x:Class="RentABook.DeleteBookWindow"
+﻿<Window x:Class="RentABook.StashABook"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RentABook"
-        xmlns:converters="clr-namespace:RentABook" xmlns:models="clr-namespace:RentABook.Models" d:DataContext="{d:DesignInstance Type=models:BookViewModel}"
+        xmlns:local="clr-namespace:RentABook" xmlns:models="clr-namespace:RentABook.Models" d:DataContext="{d:DesignInstance Type=models:BookViewModel}"
         mc:Ignorable="d"
-        Title="Delete A Book" Height="580" Width="400">
+        Title="Stash A Book" Width="400" >
+
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
                 <TextBlock>
-                    <Run Text="Currently editing BookID: "/>
+                    <Run Text="BookID: "/>
                     <Run Text="{Binding SelectedBook.BookId}"/>
                     <Run Text=" /  Book Title: "/>
                     <Run Text="{Binding SelectedBook.BookTitle}"/>
                 </TextBlock>
             </StatusBarItem>
         </StatusBar>
-        
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -36,7 +36,8 @@
                 <TextBox x:Name="txtBookID" Width="120" Height="25" Margin="5,20,10,15"/>
                 <Button Content="Check Book Details" Click="RetrieveBookDetails_Click" Height="25" Width="120" Grid.Row="1" Margin="5,20,5,15"/>
             </StackPanel>
-            <Border BorderBrush="Gray" BorderThickness=".8" Grid.Row="2" Margin="5">
+
+            <Border BorderBrush="Gray" BorderThickness=".6" Grid.Row="2" Margin="5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -79,11 +80,9 @@
                     </StackPanel>
                 </Grid>
             </Border>
-
-            <CheckBox Content="Yes, I want to delete this book!" Grid.Row="3" Margin="5" IsChecked="{Binding IsDeleteConfirmed}" HorizontalAlignment="Left" Foreground="{Binding UpdateCheckBoxForeground1}"  />
-
+            <CheckBox Content="I confirm receipt of this book from customer." Grid.Row="3" Margin="10" IsChecked="{Binding IsReturnedConfirmed}" HorizontalAlignment="Center" Foreground="{Binding UpdateCheckBoxForeground3}"  />
             <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Center"  Margin="5,5,5,15">
-                <Button x:Name="SaveAndCloseButton" Height="25" Width="150"  Content="Delete and Close" Click="SaveAndClose_Click" IsEnabled="{Binding IsDeleteConfirmed}"  Margin="0,0,25,0"/>
+                <Button x:Name="SaveAndCloseButton" Height="25" Width="150"  Content="Confirm and Close" Click="SaveAndClose_Click" IsEnabled="{Binding IsReturnedConfirmed}"  Margin="0,0,25,0"/>
                 <Button Content="Cancel" Height="25" Width="100"  Click="Cancel_Click"/>
             </StackPanel>
         </Grid>

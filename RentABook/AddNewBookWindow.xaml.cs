@@ -32,8 +32,11 @@ namespace RentABook
             vm.AddBook(vm.NewBook);
 
             this.Close();
+        }
 
-
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

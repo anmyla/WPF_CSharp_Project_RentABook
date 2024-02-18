@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace RentABook.Models
 {
@@ -18,6 +19,8 @@ namespace RentABook.Models
         private RentABookDB contextDB = new RentABookDB();
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<Book> ListOfBooks { get; set; }
+
+        public int TotalBooksCount => ListOfBooks.Count;
 
         private Book _selectedBook;
         public Book SelectedBook
@@ -123,6 +126,8 @@ namespace RentABook.Models
                 ListOfBooks.Add(book);
             }
 
+            ChangeStatusText();
+
             NewBook = new Book();
             ListBoxSelectionChangedCommand = new RelayCommand(ListBoxSelectionChanged);
 
@@ -162,9 +167,20 @@ namespace RentABook.Models
             contextDB.Books.Add(newBook);
             ListOfBooks.Add(newBook);
             contextDB.SaveChanges();
+            ChangeStatusText();
             return newBook.BookId;
+
         }
 
+        public string StatusBarText { get; set; }
+
+        private void ChangeStatusText()
+        {
+            StatusBarText = "There are " + contextDB.Books.ToList().Count.ToString() + " books in our repertoire.";
+            NotifyPropertyChanged("StatusBarText");
+        }
+
+        /*
         private void SearchBooksByGenre(Genre genre)
         {
             SearchResultGenre.Clear();
@@ -179,21 +195,28 @@ namespace RentABook.Models
                 }
             }
         }
+        */
 
-        private bool _isDuplicateConfirmed;
-
-        public bool IsDuplicateConfirmed
+        private void SearchBooksByGenre(Genre genre)
         {
-            get { return _isDeleteConfirmed; }
-            set
+            SearchResultGenre.Clear();
+            if (genre != null)
             {
-                if (_isDeleteConfirmed != value)
+                HashSet<int> addedBookIds = new HashSet<int>();
+
+                foreach (var book in ListOfBooks)
                 {
-                    _isDeleteConfirmed = value;
-                    OnPropertyChanged(nameof(IsDeleteConfirmed));
+                    if (book.GenreName == genre.GenreName && !addedBookIds.Contains(book.BookId))
+                    {
+                        SearchResultGenre.Add(book);
+                        addedBookIds.Add(book.BookId);
+                    }
                 }
             }
         }
+
+
+
 
         private void NotifyPropertyChanged(string propertyName)
         {
@@ -203,9 +226,16 @@ namespace RentABook.Models
             }
         }
 
-        public void RetrieveBookDetails(int bookId)
+        public bool RetrieveBookDetails(int bookId)
         {
             SelectedBook = ListOfBooks.FirstOrDefault(b => b.BookId == bookId);
+            if (SelectedBook != null)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
 
         public void RemoveBook()
@@ -223,7 +253,7 @@ namespace RentABook.Models
             if (SelectedBook != null)
             {
                 var bookToUpdate = contextDB.Books.Find(SelectedBook.BookId);
-                if (bookToUpdate != null)
+                if (bookToUpdate != null && IsDuplicateConfirmed)
                 {
                     bookToUpdate.BookTitle = SelectedBook.BookTitle;
                     bookToUpdate.BookAuthor = SelectedBook.BookAuthor;
@@ -237,19 +267,61 @@ namespace RentABook.Models
 
                     contextDB.SaveChanges();
                 }
-                else
+            }
+            else
+            {
+                MessageBox.Show("Book not found, operation failed!");
+            }
+        }
+
+        public void DuplicateBook()
+        {
+            if (SelectedBook != null)
+            {
+                if (IsDuplicateConfirmed)
                 {
-                    MessageBox.Show("Book not found in the database.");
+                    Book duplicateBook = new Book
+                    {
+                        BookTitle = SelectedBook.BookTitle,
+                        BookAuthor = SelectedBook.BookAuthor,
+                        BookYear = SelectedBook.BookYear,
+                        BookGenre = SelectedBook.BookGenre,
+                        BookRating = SelectedBook.BookRating,
+                        BookRentPrice = SelectedBook.BookRentPrice,
+                        BookCover = SelectedBook.BookCover,
+                        BookComment = SelectedBook.BookComment,
+                        IsAvailable = SelectedBook.IsAvailable,
+                        GenreName = SelectedBook.GenreName
+                    };
+
+                    contextDB.Books.Add(duplicateBook);
+                    ListOfBooks.Add(duplicateBook);
+                    contextDB.SaveChanges();
+                    MessageBox.Show("Book duplicated successfully.");
                 }
             }
             else
             {
-                MessageBox.Show("Please select a book to update.");
+                MessageBox.Show("Book not found, operation failed!");
+            }
+        }
+
+        private bool _isUpdateConfirmed;
+        public bool IsUpdateConfirmed
+        {
+            get { return _isUpdateConfirmed; }
+            set
+            {
+                if (_isUpdateConfirmed != value)
+                {
+                    _isUpdateConfirmed = value;
+                    OnPropertyChanged(nameof(IsUpdateConfirmed));
+                    OnPropertyChanged(nameof(UpdateCheckBoxForeground));
+                }
             }
         }
 
         private bool _isDeleteConfirmed;
-
         public bool IsDeleteConfirmed
         {
             get { return _isDeleteConfirmed; }
@@ -259,35 +331,45 @@ namespace RentABook.Models
                 {
                     _isDeleteConfirmed = value;
                     OnPropertyChanged(nameof(IsDeleteConfirmed));
+                    OnPropertyChanged(nameof(UpdateCheckBoxForeground1));
                 }
             }
         }
 
-        public void DuplicateBook()
+        private bool _isDuplicateConfirmed;
+        public bool IsDuplicateConfirmed
         {
-            if (IsDuplicateConfirmed && SelectedBook != null)
+            get { return _isDuplicateConfirmed; }
+            set
             {
-
-                Book duplicateBook = new Book
+                if (_isDuplicateConfirmed != value)
                 {
-                    BookTitle = SelectedBook.BookTitle,
-                    BookAuthor = SelectedBook.BookAuthor,
-                    BookYear = SelectedBook.BookYear,
-                    BookGenre = SelectedBook.BookGenre,
-                    BookRating = SelectedBook.BookRating,
-                    BookRentPrice = SelectedBook.BookRentPrice,
-                    BookCover = SelectedBook.BookCover,
-                    BookComment = SelectedBook.BookComment,
-                    IsAvailable = SelectedBook.IsAvailable,
-                    GenreName = SelectedBook.GenreName
-                };
-
-                contextDB.Books.Add(duplicateBook);
-                ListOfBooks.Add(duplicateBook);
-                contextDB.SaveChanges();
-                MessageBox.Show("Book duplicated successfully.");
+                    _isDuplicateConfirmed = value;
+                    OnPropertyChanged(nameof(IsDuplicateConfirmed));
+                    OnPropertyChanged(nameof(UpdateCheckBoxForeground2));
+                }
             }
         }
+
+        private bool _isReturnedConfirmed;
+        public bool IsReturnedConfirmed
+        {
+            get { return _isReturnedConfirmed; }
+            set
+            {
+                _isReturnedConfirmed = value;
+                OnPropertyChanged(nameof(IsReturnedConfirmed));
+                OnPropertyChanged(nameof(UpdateCheckBoxForeground3));
+            }
+        }
+
+
+        public string UpdateCheckBoxForeground => IsUpdateConfirmed ? "Black" : "Red";
+        public string UpdateCheckBoxForeground1 => IsDeleteConfirmed ? "Black" : "Red";
+        public string UpdateCheckBoxForeground2 => IsDuplicateConfirmed ? "Black" : "Red";
+        public string UpdateCheckBoxForeground3 => IsReturnedConfirmed ? "Black" : "Red";
+
+
         public ICommand ListBoxSelectionChangedCommand { get; }
 
         private void ListBoxSelectionChanged(object obj)
@@ -309,18 +391,21 @@ namespace RentABook.Models
                 }
             }
         }
+
         public void SearchBooks(string keyword)
         {
             SearchResult.Clear();
             string lowerKeyword = keyword.ToLower();
+            HashSet<int> addedBookIds = new HashSet<int>();
 
             foreach (var book in ListOfBooks)
             {
                 string lowerTitle = book.BookTitle.ToLower();
 
-                if (lowerTitle.Contains(lowerKeyword) || book.BookId.ToString().EndsWith(lowerKeyword))
+                if ((lowerTitle.Contains(lowerKeyword) || book.BookId.ToString().EndsWith(lowerKeyword)) && !addedBookIds.Contains(book.BookId))
                 {
                     SearchResult.Add(book);
+                    addedBookIds.Add(book.BookId);
                 }
             }
 
@@ -329,7 +414,6 @@ namespace RentABook.Models
                 MessageBox.Show("No results for this keyword!");
             }
         }
-
 
         private void DisplayBooksByGenre(Genre genre)
         {
@@ -373,16 +457,32 @@ namespace RentABook.Models
             }
             else
             {
-                MessageBox.Show("Selected book is not available for rent.");
+                MessageBox.Show("Selected book is not available for rent. Operation Failed!");
             }
         }
 
-        private void CalculateTotalAmount()
+        public void CalculateTotalAmount()
         {
             if (SelectedSearchResult != null)
             {
                 TotalAmount = (decimal)(SelectedSearchResult.BookRentPrice * RentalDays);
             }
         }
+
+
+        public void StashBook()
+        {
+            if (SelectedBook != null)
+            {
+                SelectedBook.IsAvailable = true;
+                contextDB.SaveChanges();
+                MessageBox.Show("Book successfully stashed!");
+            }
+            else
+            {
+                MessageBox.Show("No book selected to stash.");
+            }
+        }
+
     }
 }

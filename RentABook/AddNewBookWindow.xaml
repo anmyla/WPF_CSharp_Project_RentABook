@@ -27,6 +27,9 @@
             <Label Margin="10,10,125,0">Rent Price</Label>
             <TextBox Text="{Binding NewBook.BookRentPrice}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
         </UniformGrid>
-        <Button DockPanel.Dock="Bottom" Click="AddSaveClose_Click" Height="25" Width="200" HorizontalAlignment="Right" Margin="10,0,30,10">Save and Close</Button>
+        <StackPanel Orientation="Horizontal">
+            <Button DockPanel.Dock="Bottom" Click="AddSaveClose_Click" Height="25" Width="200" HorizontalAlignment="Right" Margin="30,20,35,0">Save and Close</Button>
+            <Button  Click="Cancel_Click" Height="25" Width="150" Content="Cancel" Margin="30,20,35,0" />
+        </StackPanel>
     </DockPanel>
 </Window>

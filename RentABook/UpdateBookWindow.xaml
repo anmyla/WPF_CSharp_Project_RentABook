@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RentABook" xmlns:models="clr-namespace:RentABook.Models" d:DataContext="{d:DesignInstance Type=models:BookViewModel}"
         mc:Ignorable="d"
-        Title="Add A New Book" Height="600" Width="500">
+        Title="Edit/Update a Book" Height="600" Width="500">
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
@@ -45,9 +45,9 @@
                 <TextBox Text="{Binding SelectedBook.BookRentPrice, Mode=TwoWay}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
             </UniformGrid>
 
-            <CheckBox Content="Are you sure you want to edit this book?" Margin="15,20,0,0" IsChecked="{Binding IsEditConfirmed}" HorizontalAlignment="Left" />
+            <CheckBox Content="Are you sure you want to edit this book?" Margin="15,20,0,0" IsChecked="{Binding IsUpdateConfirmed}" HorizontalAlignment="Left" Foreground="{Binding UpdateCheckBoxForeground}" />
             <StackPanel  Orientation="Horizontal"  HorizontalAlignment="Right" >
-                <Button  Click="SaveAndClose_Click" Height="25" Width="150" Content="Save and Close" Margin="0,20,0,0" />
+                <Button x:Name="SaveAndCloseButton" Height="25" Width="150" Margin="0,20,0,0"  Content="Save and Close" Click="SaveAndClose_Click" IsEnabled="{Binding IsUpdateConfirmed}" />
                 <Button  Click="Cancel_Click" Height="25" Width="150" Content="Cancel" Margin="30,20,35,0" />
             </StackPanel>
 
