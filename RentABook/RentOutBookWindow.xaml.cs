@@ -22,8 +22,15 @@ namespace RentABook
         }
         private void RentOut_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.RentOutBook();
-            Close();
+            if (_viewModel.IsIssuanceConfirmed)
+            {
+                _viewModel.RentOutBook();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Please confirm before saving.....!");
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

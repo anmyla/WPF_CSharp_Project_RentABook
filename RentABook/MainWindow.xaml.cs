@@ -24,7 +24,7 @@ namespace RentABook
             defaultBook.BookGenre = null;
             defaultBook.BookRentPrice = 0;
             defaultBook.BookRating = 0;
-            defaultBook.BookComment = null;
+            defaultBook.BookRenter = null;
             defaultBook.BookCover = "";
             defaultBook.IsAvailable = false;
             defaultBook.GenreName = "";
@@ -49,7 +49,7 @@ namespace RentABook
                 BookGenre = null,
                 BookRentPrice = 0,
                 BookRating = 0,
-                BookComment = "",
+                BookRenter = "",
                 BookCover = "",
                 IsAvailable = false,
                 GenreName = "",

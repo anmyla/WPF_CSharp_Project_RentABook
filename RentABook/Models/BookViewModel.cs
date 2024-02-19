@@ -164,12 +164,13 @@ namespace RentABook.Models
 
         public int AddBook(Book newBook)
         {
+            newBook.BookBorrowDate = new DateTime(2024, 1, 1);
+            newBook.BookReturnDate = new DateTime(2024, 1, 1);
             contextDB.Books.Add(newBook);
             ListOfBooks.Add(newBook);
             contextDB.SaveChanges();
             ChangeStatusText();
             return newBook.BookId;
-
         }
 
         public string StatusBarText { get; set; }
@@ -179,23 +180,6 @@ namespace RentABook.Models
             StatusBarText = "There are " + contextDB.Books.ToList().Count.ToString() + " books in our repertoire.";
             NotifyPropertyChanged("StatusBarText");
         }
-
-        /*
-        private void SearchBooksByGenre(Genre genre)
-        {
-            SearchResultGenre.Clear();
-            if (genre != null)
-            {
-                foreach (var book in ListOfBooks)
-                {
-                    if (book.GenreName == genre.GenreName)
-                    {
-                        SearchResultGenre.Add(book);
-                    }
-                }
-            }
-        }
-        */
 
         private void SearchBooksByGenre(Genre genre)
         {
@@ -214,9 +198,6 @@ namespace RentABook.Models
                 }
             }
         }
-
-
-
 
         private void NotifyPropertyChanged(string propertyName)
         {
@@ -253,17 +234,19 @@ namespace RentABook.Models
             if (SelectedBook != null)
             {
                 var bookToUpdate = contextDB.Books.Find(SelectedBook.BookId);
-                if (bookToUpdate != null && IsDuplicateConfirmed)
+                if (bookToUpdate != null && IsUpdateConfirmed)
                 {
                     bookToUpdate.BookTitle = SelectedBook.BookTitle;
                     bookToUpdate.BookAuthor = SelectedBook.BookAuthor;
                     bookToUpdate.BookYear = SelectedBook.BookYear;
-                    bookToUpdate.BookComment = SelectedBook.BookComment;
+                    bookToUpdate.BookRenter = SelectedBook.BookRenter;
                     bookToUpdate.BookRating = SelectedBook.BookRating;
                     bookToUpdate.IsAvailable = SelectedBook.IsAvailable;
                     bookToUpdate.BookGenre = SelectedBook.BookGenre;
                     bookToUpdate.BookCover = SelectedBook.BookCover;
                     bookToUpdate.BookRentPrice = SelectedBook.BookRentPrice;
+                    bookToUpdate.BookReturnDate = new DateTime(2024, 1, 1);
+                    bookToUpdate.BookBorrowDate = new DateTime(2024, 1, 1);
 
                     contextDB.SaveChanges();
                 }
@@ -289,10 +272,12 @@ namespace RentABook.Models
                         BookRating = SelectedBook.BookRating,
                         BookRentPrice = SelectedBook.BookRentPrice,
                         BookCover = SelectedBook.BookCover,
-                        BookComment = SelectedBook.BookComment,
+                        BookRenter = "",
                         IsAvailable = SelectedBook.IsAvailable,
-                        GenreName = SelectedBook.GenreName
-                    };
+                        GenreName = SelectedBook.GenreName,
+                        BookReturnDate = new DateTime(2024, 1, 1),
+                        BookBorrowDate = new DateTime(2024, 1, 1)
+                };
 
                     contextDB.Books.Add(duplicateBook);
                     ListOfBooks.Add(duplicateBook);
@@ -363,11 +348,24 @@ namespace RentABook.Models
             }
         }
 
+        private bool _isIssuanceConfirmed;
+        public bool IsIssuanceConfirmed
+        {
+            get { return _isIssuanceConfirmed; }
+            set
+            {
+                _isIssuanceConfirmed = value;
+                OnPropertyChanged(nameof(IsIssuanceConfirmed));
+                OnPropertyChanged(nameof(UpdateCheckBoxForeground4));
+            }
+        }
+
 
         public string UpdateCheckBoxForeground => IsUpdateConfirmed ? "Black" : "Red";
         public string UpdateCheckBoxForeground1 => IsDeleteConfirmed ? "Black" : "Red";
         public string UpdateCheckBoxForeground2 => IsDuplicateConfirmed ? "Black" : "Red";
         public string UpdateCheckBoxForeground3 => IsReturnedConfirmed ? "Black" : "Red";
+        public string UpdateCheckBoxForeground4 => IsReturnedConfirmed ? "Black" : "Red";
 
 
         public ICommand ListBoxSelectionChangedCommand { get; }
@@ -451,7 +449,10 @@ namespace RentABook.Models
         {
             if (SelectedSearchResult != null && SelectedSearchResult.IsAvailable)
             {
-                SelectedSearchResult.IsAvailable = false;
+                var bookToUpdate = contextDB.Books.Find(SelectedSearchResult.BookId);
+                bookToUpdate.IsAvailable = false;
+                bookToUpdate.BookBorrowDate = SelectedBook.BookBorrowDate;
+                bookToUpdate.BookReturnDate = new DateTime(2024, 1, 1);
                 contextDB.SaveChanges();
                 MessageBox.Show("Book rented out successfully!");
             }
@@ -474,15 +475,23 @@ namespace RentABook.Models
         {
             if (SelectedBook != null)
             {
-                SelectedBook.IsAvailable = true;
-                contextDB.SaveChanges();
-                MessageBox.Show("Book successfully stashed!");
+                var bookToUpdate = contextDB.Books.Find(SelectedBook.BookId);
+                if (bookToUpdate != null && IsReturnedConfirmed)
+                {
+                    bookToUpdate.IsAvailable = true;
+                    bookToUpdate.BookReturnDate = SelectedBook.BookReturnDate;
+                    bookToUpdate.BookBorrowDate = new DateTime(2024, 1, 1);
+                    bookToUpdate.BookRenter = "";
+                    contextDB.SaveChanges();
+                    MessageBox.Show("Book successfully stashed!");
+                }
+                
             }
             else
             {
                 MessageBox.Show("No book selected to stash.");
             }
-        }
 
+        }
     }
 }

@@ -55,16 +55,16 @@ namespace RentABook.Models
             }
         }
 
-        private string _bookComment;
-        public string BookComment
+        private string _bookRenter;
+        public string BookRenter
         {
-            get { return _bookComment; }
+            get { return _bookRenter; }
             set
             {
-                if (_bookComment != value)
+                if (_bookRenter != value)
                 {
-                    _bookComment = value;
-                    OnPropertyChanged(nameof(BookComment));
+                    _bookRenter = value;
+                    OnPropertyChanged(nameof(BookRenter));
                 }
             }
         }
@@ -138,6 +138,35 @@ namespace RentABook.Models
                 }
             }
         }
+
+        private DateTime _bookReturnDate;
+        public DateTime BookReturnDate
+        {
+            get { return _bookReturnDate; }
+            set
+            {
+                if (_bookReturnDate != value)
+                {
+                    _bookReturnDate = value;
+                    OnPropertyChanged(nameof(BookReturnDate));
+                }
+            }
+        }
+
+        private DateTime _bookBorrowDate;
+        public DateTime BookBorrowDate
+        {
+            get { return _bookBorrowDate; }
+            set
+            {
+                if (_bookBorrowDate != value)
+                {
+                    _bookBorrowDate = value;
+                    OnPropertyChanged(nameof(BookBorrowDate));
+                }
+            }
+        }
+
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

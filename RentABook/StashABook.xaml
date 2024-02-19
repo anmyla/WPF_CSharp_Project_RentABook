@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RentABook" xmlns:models="clr-namespace:RentABook.Models" d:DataContext="{d:DesignInstance Type=models:BookViewModel}"
         mc:Ignorable="d"
-        Title="Stash A Book" Width="400" >
+        Title="Stash A Book" Width="400" Height="650" >
 
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
@@ -51,7 +51,6 @@
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="0" Margin="3">
                         <TextBlock />
                         <Image Source="{Binding SelectedBook.BookCover}"  Width="170" Height="200"/>
-
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="1" Margin="3">
                         <TextBlock Text="Book Title: " FontWeight="Bold"/>
@@ -61,27 +60,27 @@
                         <TextBlock Text="Book Author: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding SelectedBook.BookAuthor}"/>
                     </StackPanel>
-
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="3" Margin="3">
-                        <TextBlock Text="Book Year: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedBook.BookYear}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="4" Margin="3">
-                        <TextBlock Text="Book Genre: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedBook.BookGenre.GenreName}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="5" Margin="3">
-                        <TextBlock Text="Book Rating: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedBook.BookRating}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="6" Margin="3,3,3,15">
                         <TextBlock Text="Book Rent Price: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding SelectedBook.BookRentPrice}" />
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="4" Margin="3">
+                        <TextBlock Text="Borower' Name: " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding SelectedBook.BookRenter}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="5" Margin="3">
+                        <TextBlock Text="Borrowed Date: " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding SelectedBook.BookBorrowDate}"/>
+                    </StackPanel>
+
                 </Grid>
             </Border>
-            <CheckBox Content="I confirm receipt of this book from customer." Grid.Row="3" Margin="10" IsChecked="{Binding IsReturnedConfirmed}" HorizontalAlignment="Center" Foreground="{Binding UpdateCheckBoxForeground3}"  />
-            <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Center"  Margin="5,5,5,15">
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="10" HorizontalAlignment="Center">
+                <Label Content="Return Date:" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
+                <DatePicker SelectedDate="{Binding SelectedBook.BookReturnDate}" Margin="5"/>
+            </StackPanel>
+            <CheckBox Content="I confirm receipt of this book from customer." Grid.Row="5" Margin="10" IsChecked="{Binding IsReturnedConfirmed}" HorizontalAlignment="Center" Foreground="{Binding UpdateCheckBoxForeground3}"  />
+            <StackPanel Orientation="Horizontal" Grid.Row="6" HorizontalAlignment="Center"  Margin="5,5,5,15">
                 <Button x:Name="SaveAndCloseButton" Height="25" Width="150"  Content="Confirm and Close" Click="SaveAndClose_Click" IsEnabled="{Binding IsReturnedConfirmed}"  Margin="0,0,25,0"/>
                 <Button Content="Cancel" Height="25" Width="100"  Click="Cancel_Click"/>
             </StackPanel>

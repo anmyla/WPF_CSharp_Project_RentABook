@@ -16,8 +16,6 @@
             <TextBox Text="{Binding NewBook.BookYear}"  HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
             <Label Margin="10,10,125,0">Genre</Label>
             <TextBox Text="{Binding NewBook.GenreName}"  HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
-            <Label Margin="10,10,125,0">Comment</Label>
-            <TextBox Text="{Binding NewBook.BookComment}" HorizontalAlignment="Left" Width="340" Height="25" Margin="-120,10,10,0"></TextBox>
             <Label Margin="10,10,125,0">Rating</Label>
             <Slider Minimum="0" Maximum="5" Value="{Binding NewBook.BookRating}" HorizontalAlignment="Left" Width="340" Margin="-120,10,10,0"></Slider>
             <Label Margin="10,10,125,0">Is Available</Label>

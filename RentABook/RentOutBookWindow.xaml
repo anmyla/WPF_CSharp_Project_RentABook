@@ -15,13 +15,13 @@
             </StackPanel>
             <Label Margin="5,5,0,0" FontWeight="DemiBold">Choose the book from the search results:</Label>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding SearchResult}" SelectedItem="{Binding SelectedSearchResult}" Margin="10,0,10,10" Grid.Row="2" MaxHeight="400">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding BookTitle}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                <ListBox ItemsSource="{Binding SearchResult}" SelectedItem="{Binding SelectedSearchResult}" Margin="10,0,10,10" Grid.Row="2" MaxHeight="400">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding BookTitle}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </ScrollViewer>
 
             <GroupBox Header="Chosen Book Details" Margin="10">
@@ -33,26 +33,39 @@
                         <TextBlock Text="{Binding SelectedSearchResult.BookId}"/>
                         <TextBlock Text="{Binding SelectedSearchResult.BookTitle}" TextWrapping="Wrap"/>
                         <TextBlock Text="{Binding SelectedSearchResult.BookAuthor}"/>
-                        <TextBlock Text="{Binding SelectedSearchResult.GenreName}"/>
-                        <TextBlock Text="{Binding SelectedSearchResult.BookRating}"/>
-                        <TextBlock Text="{Binding SelectedSearchResult.BookRentPrice}" />
+                        <TextBlock Text="{Binding SelectedSearchResult.BookRentPrice}"/>
+                        <TextBlock Text="{Binding SelectedSearchResult.IsAvailable}"/>
+                        <TextBlock Text="{Binding SelectedSearchResult.BookBorrowDate}" />
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
 
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="10,0,0,0" HorizontalAlignment="Left">
+                <Label Content="Borrow Date:" FontWeight="Bold" Margin="0" HorizontalAlignment="Left"/>
+                <DatePicker SelectedDate="{Binding SelectedBook.BookBorrowDate}" Margin="5"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Margin="10,0,0,0" HorizontalAlignment="Left" >
+                <Label Content="Borrower's Name:" FontWeight="Bold" Margin="0" HorizontalAlignment="Left"/>
+                <TextBox Text="{Binding SelectedBook.BookRenter}" Height="25" Width="280"/>
+            </StackPanel>
+
             <StackPanel Orientation="Horizontal">
-                <StackPanel Width="200">
-                    <Label HorizontalAlignment="Left" Margin="10,0,10,0">Number of Days:</Label>
-                    <TextBox Text="{Binding RentalDays, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" Margin="10,0,10,0"/>
+                <StackPanel>
+                    <Label HorizontalAlignment="Left" Margin="10,10,0,0" FontWeight="Bold">Number of Days:</Label>
+                    <TextBox Margin="15,0,0,0" Text="{Binding RentalDays, UpdateSourceTrigger=PropertyChanged}" Width="100" />
                 </StackPanel>
-                <StackPanel Width="200">
-                    <Label HorizontalAlignment="Left" Margin="10,0,10,0">Amount to be paid:</Label>
-                    <TextBlock Text="{Binding TotalAmount}" Width="100" HorizontalAlignment="Left" Margin="10,0,10,0"/>
+                <StackPanel>
+                    <Label HorizontalAlignment="Left" Margin="40,10,0,0" FontWeight="Bold" >Amount to be paid:</Label>
+                    <TextBlock Text="{Binding TotalAmount}" Margin="45,0,0,0" Width="100" HorizontalAlignment="Left"  FontWeight="DemiBold" Foreground="DarkRed" />
                 </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15">
-                <Button Content="Rent Out" Click="RentOut_Click" Margin="10" Width="80" Grid.Row="5"/>
-                <Button Content="Cancel" Click="Cancel_Click" Margin="10" Width="80" HorizontalAlignment="Right"/>
+            <StackPanel>
+                <CheckBox Content="I confirm above details are right!" Grid.Row="5" Margin="0,20,0,0" IsChecked="{Binding IsIssuanceConfirmed}" HorizontalAlignment="Center" Foreground="{Binding UpdateCheckBoxForeground4}"   />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
+                <Button Content="Rent Out" Click="RentOut_Click" Margin="10" Width="100" Grid.Row="5" IsEnabled="{Binding IsIssuanceConfirmed}"/>
+                <Button Content="Cancel" Click="Cancel_Click" Margin="10" Width="100" HorizontalAlignment="Right"/>
             </StackPanel>
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>

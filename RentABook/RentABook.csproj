@@ -74,6 +74,10 @@
     <Compile Include="Migrations\202402181051536_everythingworks.designer.cs">
       <DependentUpon>202402181051536_everythingworks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402191837573_dates.cs" />
+    <Compile Include="Migrations\202402191837573_dates.designer.cs">
+      <DependentUpon>202402191837573_dates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\RelayCommand.cs" />
     <Compile Include="RentOutBookWindow.xaml.cs">
       <DependentUpon>RentOutBookWindow.xaml</DependentUpon>
@@ -179,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402181051536_everythingworks.resx">
       <DependentUpon>202402181051536_everythingworks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402191837573_dates.resx">
+      <DependentUpon>202402191837573_dates.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
