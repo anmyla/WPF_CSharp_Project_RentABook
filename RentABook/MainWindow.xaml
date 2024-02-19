@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RentABook" xmlns:models="clr-namespace:RentABook.Models" d:DataContext="{d:DesignInstance Type=models:BookViewModel}"
         mc:Ignorable="d"
-        Title="Rent-A-Book ShopManager" Height="700" Width="1000">
+        Title="Rent-A-Book ShopManager" Height="700" Width="1400">
 
     <DockPanel>
         <Menu DockPanel.Dock="Top" Height="30" >
@@ -45,98 +45,102 @@
             </TextBlock>
         </StatusBar>
 
-
-        <StackPanel Orientation="Horizontal">
-            <GroupBox Header="Searches" FontSize="14" FontWeight="Bold" Width="280">
-                <StackPanel Width="Auto">
-                    <StackPanel Width="260" Orientation="Horizontal" Margin="5">
-                        <Label Content="Select a Genre:" FontWeight="DemiBold" Grid.Row="0"  />
-                        <ComboBox Text="Select a Genre" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" DockPanel.Dock="Left" Width="140" Margin="5,0">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Height="20" Width="20" Source="{Binding GenreIconPath}" />
-                                        <TextBlock Text="{Binding GenreName}" Margin="5,0,0,0" FontSize="14" FontWeight="DemiBold"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-                    <ListBox  Width="250" ItemsSource="{Binding SearchResultGenre}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="5" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Width="220" Text="{Binding BookTitle}" FontSize="13" FontWeight="Normal"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" Width="280">
-                            <Label Content="Keyword Search:" FontWeight="DemiBold" Grid.Row="0" VerticalAlignment="Center" />
-                            <TextBox x:Name="searchTextBox" Width="135"  Height="25" Margin="5"  FontSize="13" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" KeyDown="SearchTextBox_KeyDown"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="290"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- <StackPanel Orientation="Horizontal"> -->
+                <GroupBox Grid.Column="0"  Header="Searches" FontSize="14" FontWeight="Bold" Width="280">
+                    <StackPanel Width="Auto">
+                        <StackPanel Width="260" Orientation="Horizontal" Margin="5">
+                            <Label Content="Select a Genre:" FontWeight="DemiBold" Grid.Row="0"  />
+                            <ComboBox Text="Select a Genre" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" DockPanel.Dock="Left" Width="140" Margin="5,0">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Height="20" Width="20" Source="{Binding GenreIconPath}" />
+                                            <TextBlock Text="{Binding GenreName}" Margin="5,0,0,0" FontSize="14" FontWeight="DemiBold"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                         </StackPanel>
-                        <StackPanel>
-                            <ListBox Width="250" Margin="-10,0,0,0" ItemsSource="{Binding SearchResult}" DisplayMemberPath="BookTitle" SelectedItem="{Binding SelectedSearchResult}"  FontSize="13" FontWeight="Normal"/>
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-            </GroupBox>
-
-
-            <StackPanel Width="Auto" Margin="5,0" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <GroupBox Header="Book in Focus" FontSize="14" FontWeight="Bold" Width="251" >
-                    <StackPanel Height="776" Margin="0,0,12,0">
-
-                        <Image Height="220" Width="170" Source="{Binding SelectedBook.BookCover}" Margin="0,15" />
-                        <Label FontWeight="DemiBold" HorizontalAlignment="Center">Book ID:</Label>
-                        <TextBox Text="{Binding SelectedBook.BookId}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
-                        <Label FontWeight="DemiBold" HorizontalAlignment="Center">Title:</Label>
-                        <TextBox Text="{Binding SelectedBook.BookTitle, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="13" FontWeight="Normal"></TextBox>
-                        <Label FontWeight="DemiBold" HorizontalAlignment="Center">Author:</Label>
-                        <TextBox Text="{Binding SelectedBook.BookAuthor}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
-                        <Label FontWeight="DemiBold" HorizontalAlignment="Center">Year Published:</Label>
-                        <TextBox Text="{Binding SelectedBook.BookYear}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
-                        <Label FontWeight="DemiBold" HorizontalAlignment="Center">Genre:</Label>
-                        <TextBox Text="{Binding SelectedBook.GenreName}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
-                        <Label FontWeight="DemiBold" HorizontalAlignment="Center">Ratings:</Label>
-                        <TextBox Text="{Binding SelectedBook.BookRating}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
-                        <Label FontWeight="DemiBold" HorizontalAlignment="Center">Rent Price:</Label>
-                        <TextBox Text="{Binding SelectedBook.BookRentPrice}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
-                        <Label FontWeight="DemiBold" HorizontalAlignment="Center">Remarks:</Label>
-                        <TextBox Text="{Binding SelectedBook.BookAuthor}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
-                        <Label FontWeight="DemiBold" HorizontalAlignment="Center">Is available to Rent:</Label>
-                        <TextBox Text="{Binding SelectedBook.IsAvailable}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
-                    </StackPanel>
-                </GroupBox >
-            </StackPanel>
-
-            <StackPanel Width="Auto">
-
-                <GroupBox Header="Other Books in this Category" FontSize="14" FontWeight="Bold">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListBox ItemsSource="{Binding DisplayBookCovers}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="10">
-                        
+                        <ListBox  Width="250" ItemsSource="{Binding SearchResultGenre}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="5" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <Image Source="{Binding BookCover}" Margin="10" Height="180" Width="160"/>
+                                        <TextBlock Width="220" Text="{Binding BookTitle}" FontSize="13" FontWeight="Normal"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
-                       
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="5" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                    </ListBox>
-                    </ScrollViewer>
+                        </ListBox>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Width="280">
+                                <Label Content="Keyword Search:" FontWeight="DemiBold" Grid.Row="0" VerticalAlignment="Center" />
+                                <TextBox x:Name="searchTextBox" Width="135"  Height="25" Margin="5"  FontSize="13" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" KeyDown="SearchTextBox_KeyDown"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <ListBox Width="250" Margin="-10,0,0,0" ItemsSource="{Binding SearchResult}" DisplayMemberPath="BookTitle" SelectedItem="{Binding SelectedSearchResult}"  FontSize="13" FontWeight="Normal"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
                 </GroupBox>
 
-            </StackPanel>
 
-        </StackPanel>
+
+            <!-- <StackPanel Width="Auto" Margin="5,0" HorizontalAlignment="Center" VerticalAlignment="Top"> -->
+            <GroupBox Grid.Column="1"  Header="Book in Focus" FontSize="14" FontWeight="Bold" Width="251" >
+                        <StackPanel Margin="0,0,12,0">
+
+                            <Image Height="220" Width="170" Source="{Binding SelectedBook.BookCover}" Margin="0,15" />
+                            <Label FontWeight="DemiBold" HorizontalAlignment="Center">Book ID:</Label>
+                            <TextBox Text="{Binding SelectedBook.BookId}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
+                            <Label FontWeight="DemiBold" HorizontalAlignment="Center">Title:</Label>
+                            <TextBox Text="{Binding SelectedBook.BookTitle, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="13" FontWeight="Normal"></TextBox>
+                            <Label FontWeight="DemiBold" HorizontalAlignment="Center">Author:</Label>
+                            <TextBox Text="{Binding SelectedBook.BookAuthor}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
+                            <Label FontWeight="DemiBold" HorizontalAlignment="Center">Year Published:</Label>
+                            <TextBox Text="{Binding SelectedBook.BookYear}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
+                            <Label FontWeight="DemiBold" HorizontalAlignment="Center">Genre:</Label>
+                            <TextBox Text="{Binding SelectedBook.GenreName}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
+                            <Label FontWeight="DemiBold" HorizontalAlignment="Center">Ratings:</Label>
+                            <TextBox Text="{Binding SelectedBook.BookRating}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
+                            <Label FontWeight="DemiBold" HorizontalAlignment="Center">Rent Price:</Label>
+                            <TextBox Text="{Binding SelectedBook.BookRentPrice}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
+                            <Label FontWeight="DemiBold" HorizontalAlignment="Center">Remarks:</Label>
+                            <TextBox Text="{Binding SelectedBook.BookAuthor}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
+                            <Label FontWeight="DemiBold" HorizontalAlignment="Center">Is available to Rent:</Label>
+                            <TextBox Text="{Binding SelectedBook.IsAvailable}" BorderThickness="0" HorizontalAlignment="Center" FontSize="13" FontWeight="Normal"></TextBox>
+                        </StackPanel>
+                    </GroupBox >
+            <!--</StackPanel> -->
+
+            <!--<StackPanel Orientation="Vertical" Width="Auto">-->
+            <GroupBox Grid.Column="2" Header="Other Books in this Category" FontSize="14" FontWeight="Bold">
+                        <ScrollViewer VerticalScrollBarVisibility="Visible">
+                            <ListBox ItemsSource="{Binding DisplayBookCovers}" SelectedItem="{Binding SelectedBook}" HorizontalAlignment="Left" SelectionChanged="ListBox_SelectionChanged" Margin="10">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Image Source="{Binding BookCover}" Margin="10" Height="180" Width="160"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="5" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                            </ListBox>
+                        </ScrollViewer>
+                    </GroupBox>
+            <!--</StackPanel>-->
+
+            <!-- </StackPanel> -->
+        </Grid>
     </DockPanel>
 </Window>
 

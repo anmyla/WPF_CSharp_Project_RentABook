@@ -34,10 +34,12 @@ namespace RentABook
             Loaded += MainWindow_Loaded;
         }
 
+    
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Maximized;
         }
+        
         private void AddNewBook_Click(object sender, RoutedEventArgs e)
         {
             AddNewBookWindow addNewBookWindow = new AddNewBookWindow();
