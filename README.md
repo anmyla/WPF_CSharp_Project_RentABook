@@ -1,5 +1,5 @@
 This simple WPF project is a part of our Interactive Systems course.
-It is written in c#, uses Entity Framework for its database, and follows the CVVM model. 
+It is written in C#, uses Entity Framework for its database, and follows the CVVM model. 
 
 ----------------------------------------DOCUMENTATION-------------------------------------------------
 
