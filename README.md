@@ -1,7 +1,7 @@
 This simple WPF project is a part of our Interactive Systems course.
 It is written in c#, uses Entity Framework for its database, and follows the CVVM model. 
 
----------------------------------------------DOCUMENTATION--------------------------------------------------------
+----------------------------------------DOCUMENTATION-------------------------------------------------
 
 A "Rent a Book" WPF project is a desktop application designed for managing the rental of books within a library or bookstore setting. 
 The project leverages Windows Presentation Foundation (WPF) to provide a rich, interactive user interface. 
